@@ -12,6 +12,7 @@ import com.ingeneo.cine.app.modelo.entidad.Catalogo;
 import com.ingeneo.cine.app.modelo.entidad.Formato;
 import com.ingeneo.cine.app.modelo.entidad.Genero;
 import com.ingeneo.cine.app.modelo.entidad.Pelicula;
+import com.ingeneo.cine.app.modelo.entidad.Sala;
 import com.ingeneo.cine.app.modelo.entidad.Sucursal;
 import com.ingeneo.cine.app.modelo.entidad.ValorAtributoPelicula;
 import com.ingeneo.cine.app.negocio.repositorio.AtributoPeliculaRepository;
@@ -19,6 +20,7 @@ import com.ingeneo.cine.app.negocio.repositorio.CatalogoRepository;
 import com.ingeneo.cine.app.negocio.repositorio.FormatoRepository;
 import com.ingeneo.cine.app.negocio.repositorio.GeneroRepository;
 import com.ingeneo.cine.app.negocio.repositorio.PeliculaRepository;
+import com.ingeneo.cine.app.negocio.repositorio.SalaRepository;
 import com.ingeneo.cine.app.negocio.repositorio.SucursalRepository;
 import com.ingeneo.cine.app.negocio.repositorio.ValorAtributoPeliculaRepository;
 import com.ingeneo.cine.app.vista.vo.PeliculaREQ;
@@ -49,12 +51,21 @@ public class PeliculaService {
 	@Autowired
 	private ValorAtributoPeliculaRepository valorAtributoPeliculaRepository;
 	
+	@Autowired
+	private SalaRepository salaRepository;
+	
 	public Pelicula buscar(Long id) {
 		return peliculaRepository.findById(id).orElse(null);
 	}
 	
 	public List<Pelicula> cosultar() {
 		return peliculaRepository.findAll();
+	}
+	
+	public List<Sala> consultarSalas(Long idPelicula, Long idSucursal) {
+		Pelicula pelicula = peliculaRepository.findById(idPelicula).orElse(null);
+		Sucursal sucursal = sucursalRepository.findById(idSucursal).orElse(null);
+		return salaRepository.findByFormatoAndSucursal(pelicula.getFormato(), sucursal);
 	}
 	
 	@Transactional

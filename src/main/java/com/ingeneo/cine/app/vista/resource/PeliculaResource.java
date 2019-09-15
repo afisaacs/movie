@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ingeneo.cine.app.modelo.entidad.Pelicula;
+import com.ingeneo.cine.app.modelo.entidad.Sala;
 import com.ingeneo.cine.app.negocio.servicio.PeliculaService;
 import com.ingeneo.cine.app.vista.vo.PeliculaREQ;
 import com.ingeneo.cine.app.vista.vo.PeliculaRES;
@@ -44,6 +45,12 @@ public class PeliculaResource {
 	@ApiOperation(value = "Listar peliculas", notes = "Servicio para listar peliculas")
 	public ResponseEntity<List<Pelicula>> consultar() {
 		return new ResponseEntity<List<Pelicula>>(peliculaSvc.cosultar(), HttpStatus.OK);
+	}
+	
+	@GetMapping("/salas/{peliculaid}/{sucursalid}")
+	@ApiOperation(value = "Listar peliculas", notes = "Servicio para listar sala disponibles para el formato de la película y la sucursal")
+	public ResponseEntity<List<Sala>> consultarSalas(@PathVariable Long peliculaid, @PathVariable Long sucursalid) {
+		return new ResponseEntity<List<Sala>>(peliculaSvc.consultarSalas(peliculaid, sucursalid), HttpStatus.OK);
 	}
 	
 	@PostMapping("/crear")
