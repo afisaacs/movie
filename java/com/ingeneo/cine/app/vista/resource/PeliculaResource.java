@@ -7,6 +7,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -64,6 +65,14 @@ public class PeliculaResource {
 		pelicula.setSinopsis(peliculaVo.getSinipsis());
 		pelicula.setDuration(peliculaVo.getDuration());
 		return new ResponseEntity<PeliculaRES>(peliculaSvc.crear(pelicula, peliculaVo), HttpStatus.CREATED);
+	}
+	
+	@DeleteMapping("/eliminar/{id}")
+	@ApiOperation(value = "Eliminar película", notes = "Servicio para eliminar película")
+	public void eliminar(@PathVariable Long id) {
+		if(peliculaSvc.buscar(id) != null) {
+			peliculaSvc.eliminar(id);
+		}
 	}
 	
 }

@@ -1,12 +1,12 @@
 package com.ingeneo.cine.app.modelo.entidad;
 
-import javax.persistence.CascadeType;
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 
@@ -14,19 +14,19 @@ import lombok.Data;
 
 @Entity
 @Data
-public class Catalogo {
+public class Boleta implements Serializable {
+	private static final long serialVersionUID = 3648836341397614262L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
 	@NotNull
-	private Sucursal sucursal;
+	private Integer fila;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-	@JoinColumn(name = "pelicula_id", referencedColumnName = "id")
 	@NotNull
-	private Pelicula pelicula;
+	private Integer columna;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	private Reserva reserva;
 }

@@ -62,6 +62,10 @@ public class PeliculaService {
 		return peliculaRepository.findAll();
 	}
 	
+	public void eliminar(Long id) {
+		peliculaRepository.deleteById(id);
+	}
+	
 	public List<Sala> consultarSalas(Long idPelicula, Long idSucursal) {
 		Pelicula pelicula = peliculaRepository.findById(idPelicula).orElse(null);
 		Sucursal sucursal = sucursalRepository.findById(idSucursal).orElse(null);
